@@ -50,5 +50,14 @@ RUN apt -y install php7.4
 # GDB
 RUN apt -y install gdb
 
+RUN apt -y install g++
+RUN wget https://github.com/skvadrik/re2c/releases/download/3.0/re2c-3.0.tar.xz
+RUN tar -xf re2c-3.0.tar.xz
+WORKDIR /re2c-3.0
+RUN ./configure
+RUN make -j$(nproc)
+RUN make install
+WORKDIR /
+
 RUN mkdir /code
 WORKDIR /code

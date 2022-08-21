@@ -8,12 +8,8 @@ if (\php_uname('m') !== 'x86_64') {
     throw new \RuntimeException('Unsupported machine type');
 }
 
-switch (\php_uname('s')) {
-    case 'Linux':
-        $libraryFileName = 'calc_linux.so';
-        break;
-    default:
-        throw new \RuntimeException('Unsupported operating system');
+if (\php_uname('s') !== 'Linux') {
+    throw new \RuntimeException('Unsupported operating system');
 }
 
 $libc = \FFI::cdef('
@@ -22,8 +18,8 @@ typedef struct parser_ast {
     const char* value;
     struct parser_ast* children[2];
 } parser_ast;
-parser_ast* parse();
-', __DIR__ . "/../src/" . $libraryFileName);
+parser_ast* parse(const char *file_path);
+', __DIR__ . "/../src/library_linux.so");
 
 function dump($ast, int $indent = 0): void
 {
@@ -33,12 +29,17 @@ function dump($ast, int $indent = 0): void
         $node->kind,
         $node->value ? sprintf(" \"%s\"", $node->value) : ''
     );
-    for($i = 0; $i < 2; $i ++) {
-        if($node->children[$i] !== NULL) {
+    for ($i = 0; $i < 2; $i++) {
+        if ($node->children[$i] !== null) {
             dump($node->children[$i], $indent + 2);
         }
     }
 }
 
-$ast  = $libc->parse();
+$filePath = $argv[1];
+if(!is_file($filePath)) {
+    throw new \RuntimeException('Invalid file path');
+}
+
+$ast = $libc->parse($filePath);
 dump($ast);

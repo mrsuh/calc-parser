@@ -1,3 +1,5 @@
 .idea
-src/calc.c
-src/calc.h
+src/parser.c
+src/parser.h
+src/lexer.c
+src/dump
