@@ -18,6 +18,6 @@ parser_ast* create_ast_operation(const char* kind, parser_ast* left, parser_ast*
 
 void dump_ast(parser_ast* ast, int indent);
 
-parser_ast* parse(const char *file_path);
+parser_ast* parse(char *content);
 
 #endif

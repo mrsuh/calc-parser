@@ -39,30 +39,15 @@ void yyerror (char **content, char const *s)
   fprintf (stderr, "%s\n", s);
 }
 
-parser_ast* parse(const char *file_path) {
-
-    FILE *file = fopen(file_path, "r");
-    fseek(file, 0, SEEK_END);
-    long fsize = ftell(file);
-    fseek(file, 0, SEEK_SET);
-
-    char *content = (char *)malloc(fsize + 1);
-    fread(content, fsize, 1, file);
-    fclose(file);
-
-    content[fsize] = 0;
+parser_ast* parse(char *content) {
 
     yyparse(&content);
 
     return ast;
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
-    if(argc < 2) {
-        return 1;
-    }
-
     ast = parse(argv[1]);
     if (ast == NULL) {
        return 1;

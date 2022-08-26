@@ -16,4 +16,4 @@ dump:
 	bison --header -o src/parser.c src/parser.y
 	re2c src/lexer.l > src/lexer.c
 	gcc -g src/ast.c src/lexer.c src/parser.c -o src/dump
-	./src/dump /code/test.txt
+	./src/dump "10 - 20 + 30"

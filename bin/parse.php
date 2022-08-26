@@ -18,7 +18,7 @@ typedef struct parser_ast {
     const char* value;
     struct parser_ast* children[2];
 } parser_ast;
-parser_ast* parse(const char *file_path);
+parser_ast* parse(char *content);
 ', __DIR__ . "/../src/library_linux.so");
 
 function dump($ast, int $indent = 0): void
@@ -36,10 +36,5 @@ function dump($ast, int $indent = 0): void
     }
 }
 
-$filePath = $argv[1];
-if(!is_file($filePath)) {
-    throw new \RuntimeException('Invalid file path');
-}
-
-$ast = $libc->parse($filePath);
+$ast = $libc->parse($argv[1]);
 dump($ast);

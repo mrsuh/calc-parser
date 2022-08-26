@@ -1,6 +1,6 @@
 # Calc parser
 
-A simple calculator parser built with [GNU Bison](https://www.gnu.org/software/bison/)
+A simple calculator parser built with [GNU Bison](https://www.gnu.org/software/bison/) and [re2c](https://re2c.org)
 
 ## Requirements
 * PHP 7.4 (with FFI)
@@ -8,13 +8,8 @@ A simple calculator parser built with [GNU Bison](https://www.gnu.org/software/b
 
 ## Example
 
-file.txt
-```text
-10 + 20 - 30
-```
-
 ```bash
-php bin/parse.php /code/test.txt
+php bin/parse.php "10 + 20 - 30"
 ```
 
 ```bash
@@ -41,5 +36,5 @@ make
 docker build -t calc-parser .
 docker run -v "$PWD":/code -it calc-parser bash
 make
-php bin/parse.php /code/test.txt
+php bin/parse.php "10 + 20 - 30"
 ```
